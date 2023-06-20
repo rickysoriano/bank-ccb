@@ -25,43 +25,37 @@ export class Alumnos extends Entity {
     type: 'string',
     required: true,
   })
-  apellidoaterno: string;
+  apellido_paterno: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  apellidoMaterno: string;
+  apellido_materno: string;
 
   @property({
     type: 'date',
     required: true,
   })
-  fechaDeNacimiento: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  direccion: string;
+  fecha_nacimiento: string;
 
   @property({
     type: 'number',
     required: true,
   })
-  tipoPago: number;
+  tipo_pago: number;
 
   @property({
     type: 'boolean',
     required: true,
   })
-  statusPago: boolean;
+  status_pago: boolean;
 
   @property({
     type: 'number',
     required: true,
   })
-  pagoMensual: number;
+  pago_mensual: number;
 
   @property({
     type: 'number',
@@ -72,13 +66,13 @@ export class Alumnos extends Entity {
     type: 'date',
     required: true,
   })
-  fechaPago: string;
+  fecha_pago: string;
 
   @property({
     type: 'string',
     required: true,
   })
-  tipoAlumno: string;
+  tipo_alumno: string;
 
   @property({
     type: 'string',
