@@ -1,15 +1,25 @@
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 
+// const config = {
+//   name: 'db',
+//   connector: 'postgresql',
+//   url: '',
+//   host: 'localhost',
+//   port: 5432,
+//   user: 'postgres',
+//   password: '12345',
+//   database: 'SistemaCCB1'
+// };
+
 const config = {
-  name: 'db',
+  name: 'mfzmzdoq',
   connector: 'postgresql',
-  url: '',
-  host: 'localhost',
+  host: 'kashin.db.elephantsql.com',
   port: 5432,
-  user: 'postgres',
-  password: '12345',
-  database: 'SistemaCCB1'
+  user: 'mfzmzdoq',
+  password: 'CsSqbXiU6OKPz0RVAlfe1s0FtqWTDD63',
+  database: 'mfzmzdoq'
 };
 
 // Observe application's life cycle to disconnect the datasource when

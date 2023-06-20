@@ -25,7 +25,7 @@ export class Alumnos extends Entity {
     type: 'string',
     required: true,
   })
-  apellidoPaterno: string;
+  apellidoaterno: string;
 
   @property({
     type: 'string',
