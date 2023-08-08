@@ -19,6 +19,7 @@ import {
 } from '@loopback/rest';
 import {Asistencias} from '../models';
 import {AsistenciasRepository} from '../repositories';
+import {inject} from '@loopback/core';
 
 export class AsistenciasController {
   constructor(
@@ -147,4 +148,24 @@ export class AsistenciasController {
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.asistenciasRepository.deleteById(id);
   }
+
+  @get('/asistencias/registrar-asistencia/{id}/{fecha}/{hora}')
+  //@get('/asistencias/registrar-asistencia')
+  @response(200, {
+    description: 'Asistencias model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(Asistencias, {includeRelations: true}),
+      },
+    },
+  })
+  async registrarAsistencia(
+    @param.path.number('id') id: number,
+    @param.path.string('fecha') fecha: string,
+    @param.path.string('hora') hora: string,
+  ): Promise<any> {
+    return this.asistenciasRepository.registrarAsistencia(id,fecha,hora);
+  }
+
+
 }
