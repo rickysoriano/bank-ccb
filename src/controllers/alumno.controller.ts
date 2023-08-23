@@ -147,4 +147,25 @@ export class AlumnoController {
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.alumnosRepository.deleteById(id);
   }
+
+  @get('/alumnos/nombre/{id}')
+  @response(200, {
+    description: 'Array of Alumnos model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Alumnos, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async getNombreAlumno(
+    @param.path.number('id') id: number,
+  ): Promise<any> {
+    return this.alumnosRepository.getNombreAlumno(id);
+  }
+
+
+
 }

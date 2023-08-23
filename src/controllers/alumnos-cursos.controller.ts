@@ -147,4 +147,42 @@ export class AlumnosCursosController {
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.alumnosCursosRepository.deleteById(id);
   }
+
+  //Alumnos cursos
+
+  @get('/alumnos-cursos/alumnos/{id}/{ciclo_escolar}')
+  @response(200, {
+    description: 'Asistencias model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(AlumnosCursos, {includeRelations: true}),
+      },
+    },
+  })
+  async getAlumnosPorCurso(
+    @param.path.number('id') id_curso: number,
+    @param.path.string('ciclo_escolar') ciclo_escolar: string,
+  ): Promise<any> {
+    return this.alumnosCursosRepository.getAlumnosPorCurso(id_curso, ciclo_escolar);
+  }
+
+  //Calificacines Alumnos
+
+  @get('/alumnos-cursos/calificaciones/{id}/{ciclo_escolar}')
+  @response(200, {
+    description: 'Asistencias model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(AlumnosCursos, {includeRelations: true}),
+      },
+    },
+  })
+  async getCalificacionesAlumnos(
+    @param.path.number('id') id_alumno: number,
+    @param.path.string('ciclo_escolar') ciclo_escolar: string,
+  ): Promise<any> {
+    return this.alumnosCursosRepository.getCalificacionesAlumnos(id_alumno, ciclo_escolar);
+  }
+
+
 }
