@@ -17,7 +17,7 @@ import {
   requestBody,
   response,
 } from '@loopback/rest';
-import {AlumnosCursos} from '../models';
+import {AlumnosCursos, Materia} from '../models';
 import {AlumnosCursosRepository} from '../repositories';
 
 export class AlumnosCursosController {
@@ -183,6 +183,26 @@ export class AlumnosCursosController {
   ): Promise<any> {
     return this.alumnosCursosRepository.getCalificacionesAlumnos(id_alumno, ciclo_escolar);
   }
+
+  //asignar calificaciones
+
+  @get('/alumnos-cursos/asignar-calificaciones/{alumno}/{materia}/{calificacion}')
+  @response(200, {
+    description: 'Asistencias model instance',
+    content: {
+      'application/json': {
+        schema: getModelSchemaRef(AlumnosCursos, {includeRelations: true}),
+      },
+    },
+  })
+  async asignarCalificaciones(
+    @param.path.number('alumno') alumno: number,
+    @param.path.number('materia') materia: number,
+    @param.path.number('calificacion') calificacion: number,
+  ): Promise<any> {
+    return this.alumnosCursosRepository.asignarCalificaciones(alumno,materia,calificacion);
+  }
+
 
 
 }

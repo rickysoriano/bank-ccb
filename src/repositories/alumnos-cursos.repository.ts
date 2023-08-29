@@ -36,7 +36,7 @@ export class AlumnosCursosRepository extends DefaultCrudRepository<
   getCalificacionesAlumnos(id_alumno: number ,ciclo_escolar : string){
 
     let sql : string = `
-    select m."nombre_Materia",
+    select m."nombre_Materia", m."id_materia",
     ac.calificion
     from "alumnos-cursos" ac
     join materia m  on ac.materia_fk = m.id_materia
@@ -49,6 +49,22 @@ export class AlumnosCursosRepository extends DefaultCrudRepository<
       .catch(error => reject(error));
     })
 
+  }
+
+  asignarCalificaciones(alumno : number ,materia: number,calificacion:number):Promise<any>{
+    let sql : string = `
+    select * from insert_or_update_alumno_curso(
+      ${alumno},
+      ${materia},
+      ${calificacion}
+
+    );`
+
+    return new Promise((resolve, reject)=>{
+      this.dataSource.execute(sql)
+      .then(result => resolve(result))
+      .catch(error => reject(error));
+    })
   }
 
 
