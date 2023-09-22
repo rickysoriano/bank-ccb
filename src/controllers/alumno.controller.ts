@@ -166,6 +166,31 @@ export class AlumnoController {
     return this.alumnosRepository.getNombreAlumno(id);
   }
 
+  @get('/alumnos/get-alumno/{nombre}/{apellido_paterno}/{apellido_materno}/{fecha_nacimiento}')
+  @response(200, {
+    description: 'Array of Alumnos model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Alumnos, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async getAlumnobyNombreCompleto(
+    @param.path.string('nombre') nombre: string,
+    @param.path.string('apellido_paterno') apellido_paterno: string,
+    @param.path.string('apellido_materno') apellido_materno: string,
+    @param.path.string('fecha_nacimiento') fecha_nacimiento: string,
+  ): Promise<any> {
+    return this.alumnosRepository.getAlumnobyNombreCompleto(nombre,
+      apellido_paterno,
+      apellido_materno,
+      fecha_nacimiento);
+  }
+
+
 
 
 }

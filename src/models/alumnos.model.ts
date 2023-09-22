@@ -47,7 +47,7 @@ export class Alumnos extends Entity {
 
   @property({
     type: 'boolean',
-    required: true,
+
   })
   status_pago: boolean;
 
@@ -92,7 +92,42 @@ export class Alumnos extends Entity {
   })
   turno: string;
 
-  
+  @property({
+    type: 'string',
+  })
+  ciclo_escolar: string;
+
+  @property({
+    type: 'string',
+  })
+  proxima_fecha_pago: string;
+
+  @property({
+    type: 'string',
+
+  })
+  nombre_tutor: string;
+
+  @property({
+    type: 'string',
+
+  })
+  apellido_paterno_tutor: string;
+
+  @property({
+    type: 'string',
+
+  })
+  apellido_materno_tutor: string;
+
+  @property({
+    type: 'string',
+
+  })
+  telefono_tutor: string;
+
+
+
 
   // Define well-known properties here
 

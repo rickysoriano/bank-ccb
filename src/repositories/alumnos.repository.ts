@@ -28,4 +28,23 @@ export class AlumnosRepository extends DefaultCrudRepository<
     })
   }
 
+  getAlumnobyNombreCompleto(nombre:string,
+    apellido_paterno:string,
+    apellido_materno:string,
+    fecha_nacimiento:string,
+    ){
+
+    let sql : string = `select * from alumnos
+    where nombre = '${nombre}'
+    and apellido_paterno= '${apellido_paterno}'
+    and apellido_materno= '${apellido_materno}'
+    and fecha_nacimiento = '${fecha_nacimiento}'`
+
+    return new Promise((resolve, reject)=>{
+      this.dataSource.execute(sql)
+      .then(result => resolve(result))
+      .catch(error => reject(error));
+    })
+  }
+
 }
