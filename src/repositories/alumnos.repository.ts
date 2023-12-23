@@ -47,4 +47,28 @@ export class AlumnosRepository extends DefaultCrudRepository<
     })
   }
 
+  setPagoAlumno(
+    id: number,
+    tipoPago: number,
+  ){
+
+    let sql : string = `
+    select * from actualizar_fecha_pago(${id},${tipoPago})
+    `
+
+    return new Promise((resolve, reject)=>{
+      this.dataSource.execute(sql)
+      .then(result => resolve(result))
+      .catch(error => reject(error));
+    })
+  }
+
+
+
+
+
+
+
+
+
 }

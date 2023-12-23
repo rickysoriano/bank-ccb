@@ -190,6 +190,33 @@ export class AlumnoController {
       fecha_nacimiento);
   }
 
+  /**
+   * Registrar Pago
+   */
+
+  @get('/alumnos/pago/{id}/{tipoPago}')
+  @response(200, {
+    description: 'Array of Alumnos model instances',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: getModelSchemaRef(Alumnos, {includeRelations: true}),
+        },
+      },
+    },
+  })
+  async setPago(
+    @param.path.number('id') id: number,
+    @param.path.number('tipoPago') tipoPago: number,
+  ): Promise<any> {
+    return this.alumnosRepository.setPagoAlumno(id,tipoPago);
+  }
+
+
+
+
+
 
 
 
