@@ -37,12 +37,12 @@ export class CursosController {
         'application/json': {
           schema: getModelSchemaRef(Cursos, {
             title: 'NewCursos',
-            exclude: ['id_cursos'],
+            exclude: ['id_curso'],
           }),
         },
       },
     })
-    cursos: Omit<Cursos, 'id_cursos'>,
+    cursos: Omit<Cursos, 'id_curso'>,
   ): Promise<Cursos> {
     return this.cursosRepository.create(cursos);
   }

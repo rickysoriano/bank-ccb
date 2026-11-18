@@ -55,6 +55,9 @@
     "@loopback/rest": "^12.0.9",
     "@loopback/rest-explorer": "^5.0.9",
     "@loopback/service-proxy": "^5.0.9",
+    "@neon/config": "^1.11.2",
+    "@neon/env": "^1.6.14",
+    "dotenv": "^16.6.1",
     "loopback-connector-postgresql": "^5.5.2",
     "tslib": "^2.0.0"
   },

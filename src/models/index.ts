@@ -6,3 +6,6 @@ export * from './materia.model';
 export * from './cursos.model';
 export * from './area-curso.model';
 export * from './asistencias.model';
+export * from './tipos-pago.model';
+export * from './maestros.model';
+export * from './asistencias-maestros.model';

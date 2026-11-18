@@ -5,7 +5,7 @@ import {Tutores, TutoresRelations} from '../models';
 
 export class TutoresRepository extends DefaultCrudRepository<
   Tutores,
-  typeof Tutores.prototype.turores,
+  typeof Tutores.prototype.id_tutor,
   TutoresRelations
 > {
   constructor(

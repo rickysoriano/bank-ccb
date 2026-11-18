@@ -1,12 +1,10 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model(
-  {
-    settings: {
-    postgresql: {schema: 'public', table: 'asistencias'}
-    }
-  }
-)
+@model({
+  settings: {
+    postgresql: {schema: 'public', table: 'asistencias'},
+  },
+})
 export class Asistencias extends Entity {
   @property({
     type: 'number',
@@ -19,18 +17,31 @@ export class Asistencias extends Entity {
     type: 'number',
     required: true,
   })
-  id_alumno: number;
+  alumno_fk: number;
 
   @property({
-    type: 'date',
+    type: 'string',
+    jsonSchema: {format: 'date'},
     required: true,
   })
   fecha: string;
 
-  // Define well-known properties here
+  @property({
+    type: 'string',
+  })
+  hora?: string;
 
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  @property({
+    type: 'boolean',
+  })
+  presente?: boolean;
+
+  @property({
+    type: 'number',
+    default: 1,
+  })
+  veces_registrado?: number;
+
   [prop: string]: any;
 
   constructor(data?: Partial<Asistencias>) {
@@ -38,8 +49,6 @@ export class Asistencias extends Entity {
   }
 }
 
-export interface AsistenciasRelations {
-  // describe navigational properties here
-}
+export interface AsistenciasRelations {}
 
 export type AsistenciasWithRelations = Asistencias & AsistenciasRelations;

@@ -37,12 +37,12 @@ export class TutoresController {
         'application/json': {
           schema: getModelSchemaRef(Tutores, {
             title: 'NewTutores',
-            exclude: ['tutores'],
+            exclude: ['id_tutor'],
           }),
         },
       },
     })
-    tutores: Omit<Tutores, 'tutores'>,
+    tutores: Omit<Tutores, 'id_tutor'>,
   ): Promise<Tutores> {
     return this.tutoresRepository.create(tutores);
   }

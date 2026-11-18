@@ -1,6 +1,10 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    postgresql: {schema: 'public', table: 'materia'},
+  },
+})
 export class Materia extends Entity {
   @property({
     type: 'number',
@@ -13,7 +17,7 @@ export class Materia extends Entity {
     type: 'string',
     required: true,
   })
-  nombre_Materia: string;
+  nombre_materia: string;
 
   @property({
     type: 'number',
@@ -21,10 +25,6 @@ export class Materia extends Entity {
   })
   fk_curso: number;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<Materia>) {
@@ -32,8 +32,6 @@ export class Materia extends Entity {
   }
 }
 
-export interface MateriaRelations {
-  // describe navigational properties here
-}
+export interface MateriaRelations {}
 
 export type MateriaWithRelations = Materia & MateriaRelations;

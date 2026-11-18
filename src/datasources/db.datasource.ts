@@ -1,25 +1,18 @@
+import '../env';
 import {inject, lifeCycleObserver, LifeCycleObserver} from '@loopback/core';
 import {juggler} from '@loopback/repository';
 
-// const config = {
-//   name: 'db',
-//   connector: 'postgresql',
-//   url: '',
-//   host: 'localhost',
-//   port: 5432,
-//   user: 'postgres',
-//   password: '12345',
-//   database: 'SistemaCCB1'
-// };
-
 const config = {
-  name: 'mfzmzdoq',
+  name: 'db',
   connector: 'postgresql',
-  host: 'kashin.db.elephantsql.com',
-  port: 5432,
-  user: 'mfzmzdoq',
-  password: 'CsSqbXiU6OKPz0RVAlfe1s0FtqWTDD63',
-  database: 'mfzmzdoq'
+  // Neon: use the pooled connection string for application traffic.
+  // Fall back to the local PostgreSQL instance when DATABASE_URL is absent.
+  url: process.env.DATABASE_URL ?? '',
+  host: process.env.DB_HOST ?? 'localhost',
+  port: Number(process.env.DB_PORT ?? 5432),
+  user: process.env.DB_USER ?? 'postgres',
+  password: process.env.DB_PASSWORD ?? '12345',
+  database: process.env.DB_DATABASE ?? 'SistemaCCB1',
 };
 
 // Observe application's life cycle to disconnect the datasource when

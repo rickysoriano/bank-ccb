@@ -37,12 +37,12 @@ export class PagosController {
         'application/json': {
           schema: getModelSchemaRef(Pagos, {
             title: 'NewPagos',
-            exclude: ['id_pagos'],
+            exclude: ['id_pago'],
           }),
         },
       },
     })
-    pagos: Omit<Pagos, 'id_pagos'>,
+    pagos: Omit<Pagos, 'id_pago'>,
   ): Promise<Pagos> {
     return this.pagosRepository.create(pagos);
   }

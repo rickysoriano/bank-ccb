@@ -5,7 +5,7 @@ import {Pagos, PagosRelations} from '../models';
 
 export class PagosRepository extends DefaultCrudRepository<
   Pagos,
-  typeof Pagos.prototype.id_pagos,
+  typeof Pagos.prototype.id_pago,
   PagosRelations
 > {
   constructor(

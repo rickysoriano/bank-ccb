@@ -5,7 +5,7 @@ import {AlumnosCursos, AlumnosCursosRelations} from '../models';
 
 export class AlumnosCursosRepository extends DefaultCrudRepository<
   AlumnosCursos,
-  typeof AlumnosCursos.prototype.id_alumnos,
+  typeof AlumnosCursos.prototype.id_alumno_materia,
   AlumnosCursosRelations
 > {
   constructor(
@@ -14,60 +14,46 @@ export class AlumnosCursosRepository extends DefaultCrudRepository<
     super(AlumnosCursos, dataSource);
   }
 
-  getAlumnosPorCurso(id_curso: number ,ciclo_escolar : string){
-
-    let sql : string = `select distinct(a.id_alumnos) ,
-    CONCAT(a.nombre,' ',a.apellido_paterno,' ',a.apellido_materno) as nombre
-    from "alumnos-cursos" ac
-    join alumnos a on a.id_alumnos = ac.alumno_fk
-    join materia m on m.id_materia  = ac.materia_fk
-    where m.fk_curso = ${id_curso}
-    and ac.ciclo_escolar='${ciclo_escolar}';`
-
-
-    return new Promise((resolve, reject)=>{
-      this.dataSource.execute(sql)
-      .then(result => resolve(result))
-      .catch(error => reject(error));
-    })
-
+  async getAlumnosPorCurso(id_curso: number, _ciclo_escolar?: string) {
+    const sql = `
+      select distinct a.id_alumno,
+        concat_ws(' ', a.nombre, a.apellido_paterno, a.apellido_materno) as nombre
+      from alumnos_materias am
+      join alumnos a on a.id_alumno = am.alumno_fk
+      join materia m on m.id_materia = am.materia_fk
+      where m.fk_curso = $1
+      order by a.id_alumno`;
+    return this.dataSource.execute(sql, [id_curso]);
   }
 
-  getCalificacionesAlumnos(id_alumno: number ,ciclo_escolar : string){
-
-    let sql : string = `
-    select m."nombre_Materia", m."id_materia",
-    ac.calificion
-    from "alumnos-cursos" ac
-    join materia m  on ac.materia_fk = m.id_materia
-    where ac.alumno_fk  = ${id_alumno}
-    and ac.ciclo_escolar = '${ciclo_escolar}';`
-
-    return new Promise((resolve, reject)=>{
-      this.dataSource.execute(sql)
-      .then(result => resolve(result))
-      .catch(error => reject(error));
-    })
-
+  async getCalificacionesAlumnos(id_alumno: number, _ciclo_escolar?: string) {
+    const sql = `
+      select m.nombre_materia, m.id_materia, am.calificacion
+      from alumnos_materias am
+      join materia m on m.id_materia = am.materia_fk
+      where am.alumno_fk = $1
+      order by m.nombre_materia`;
+    return this.dataSource.execute(sql, [id_alumno]);
   }
 
-  asignarCalificaciones(alumno : number ,materia: number,calificacion:number):Promise<any>{
-    let sql : string = `
-    select * from insert_or_update_alumno_curso(
-      ${alumno},
-      ${materia},
-      ${calificacion}
+  async asignarCalificaciones(
+    alumno: number,
+    materia: number,
+    calificacion: number,
+  ): Promise<AlumnosCursos> {
+    const existing = await this.findOne({
+      where: {alumno_fk: alumno, materia_fk: materia},
+    });
 
-    );`
+    if (existing) {
+      await this.updateById(existing.id_alumno_materia!, {calificacion});
+      return this.findById(existing.id_alumno_materia!);
+    }
 
-    return new Promise((resolve, reject)=>{
-      this.dataSource.execute(sql)
-      .then(result => resolve(result))
-      .catch(error => reject(error));
-    })
+    return this.create({
+      alumno_fk: alumno,
+      materia_fk: materia,
+      calificacion,
+    });
   }
-
-
-
-
 }

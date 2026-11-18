@@ -1,13 +1,17 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    postgresql: {schema: 'public', table: 'tutores'},
+  },
+})
 export class Tutores extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  turores?: number;
+  id_tutor?: number;
 
   @property({
     type: 'string',
@@ -17,26 +21,19 @@ export class Tutores extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  apellidoPaterno: string;
+  apellido_paterno?: string;
 
   @property({
     type: 'string',
-    required: true,
   })
-  apellidoMaterno: string;
+  apellido_materno?: string;
 
   @property({
     type: 'string',
-    required: true,
   })
-  telefono: string;
+  telefono?: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<Tutores>) {
@@ -44,8 +41,6 @@ export class Tutores extends Entity {
   }
 }
 
-export interface TutoresRelations {
-  // describe navigational properties here
-}
+export interface TutoresRelations {}
 
 export type TutoresWithRelations = Tutores & TutoresRelations;

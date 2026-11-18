@@ -5,7 +5,7 @@ import {Cursos, CursosRelations} from '../models';
 
 export class CursosRepository extends DefaultCrudRepository<
   Cursos,
-  typeof Cursos.prototype.id_cursos,
+  typeof Cursos.prototype.id_curso,
   CursosRelations
 > {
   constructor(

@@ -6,3 +6,6 @@ export * from './materia.repository';
 export * from './cursos.repository';
 export * from './area-curso.repository';
 export * from './asistencias.repository';
+export * from './tipos-pago.repository';
+export * from './maestros.repository';
+export * from './asistencias-maestros.repository';

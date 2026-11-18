@@ -1,19 +1,17 @@
-import {Entity, Model, model, property} from '@loopback/repository';
+import {Entity, model, property} from '@loopback/repository';
 
-@model(
-  {
-    settings: {
-    postgresql: {schema: 'public', table: 'alumnos'}
-    }
-  }
-)
+@model({
+  settings: {
+    postgresql: {schema: 'public', table: 'alumnos'},
+  },
+})
 export class Alumnos extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  id_alumnos?: number;
+  id_alumno?: number;
 
   @property({
     type: 'string',
@@ -23,116 +21,56 @@ export class Alumnos extends Entity {
 
   @property({
     type: 'string',
-    required: true,
   })
-  apellido_paterno: string;
+  apellido_paterno?: string;
 
   @property({
     type: 'string',
-    required: true,
   })
-  apellido_materno: string;
+  apellido_materno?: string;
 
   @property({
-    type: 'date',
-    required: true,
+    type: 'string',
+    jsonSchema: {format: 'date'},
   })
-  fecha_nacimiento: string;
+  fecha_nacimiento?: string;
+
+  @property({
+    type: 'string',
+    jsonSchema: {format: 'date'},
+  })
+  fecha_ingreso?: string;
+
+  @property({
+    type: 'string',
+  })
+  direccion?: string;
+
+  @property({
+    type: 'string',
+  })
+  correo?: string;
+
+  @property({
+    type: 'string',
+  })
+  telefono?: string;
+
+  @property({
+    type: 'string',
+  })
+  turno?: string;
+
+  @property({
+    type: 'string',
+  })
+  tipo_alumno?: string;
 
   @property({
     type: 'number',
-    required: true,
   })
-  tipo_pago: number;
+  tutor_fk?: number;
 
-  @property({
-    type: 'boolean',
-
-  })
-  status_pago: boolean;
-
-  @property({
-    type: 'number',
-    required: true,
-  })
-  pago_mensual: number;
-
-  @property({
-    type: 'number',
-  })
-  descuento?: number;
-
-  @property({
-    type: 'date',
-    required: true,
-  })
-  fecha_pago: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  tipo_alumno: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  correo: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  telefono: string;
-
-  @property({
-    type: 'string',
-    required: true,
-  })
-  turno: string;
-
-  @property({
-    type: 'string',
-  })
-  ciclo_escolar: string;
-
-  @property({
-    type: 'string',
-  })
-  proxima_fecha_pago: string;
-
-  @property({
-    type: 'string',
-
-  })
-  nombre_tutor: string;
-
-  @property({
-    type: 'string',
-
-  })
-  apellido_paterno_tutor: string;
-
-  @property({
-    type: 'string',
-
-  })
-  apellido_materno_tutor: string;
-
-  @property({
-    type: 'string',
-
-  })
-  telefono_tutor: string;
-
-
-
-
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<Alumnos>) {
@@ -140,8 +78,6 @@ export class Alumnos extends Entity {
   }
 }
 
-export interface AlumnosRelations {
-  // describe navigational properties here
-}
+export interface AlumnosRelations {}
 
 export type AlumnosWithRelations = Alumnos & AlumnosRelations;

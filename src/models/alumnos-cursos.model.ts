@@ -1,19 +1,19 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model(
-  {
-    settings: {
-    postgresql: {schema: 'public', table: 'alumnos-cursos'}
-    }
-  }
-)
+// The API historically calls this resource "alumnos-cursos". It maps to the
+// `alumnos_materias` table in the current database schema.
+@model({
+  settings: {
+    postgresql: {schema: 'public', table: 'alumnos_materias'},
+  },
+})
 export class AlumnosCursos extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  id_alumnos_cursos?: number;
+  id_alumno_materia?: number;
 
   @property({
     type: 'number',
@@ -29,13 +29,10 @@ export class AlumnosCursos extends Entity {
 
   @property({
     type: 'number',
+    jsonSchema: {nullable: true},
   })
-  calificion?: number;
+  calificacion?: number | null;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<AlumnosCursos>) {
@@ -43,8 +40,7 @@ export class AlumnosCursos extends Entity {
   }
 }
 
-export interface AlumnosCursosRelations {
-  // describe navigational properties here
-}
+export interface AlumnosCursosRelations {}
 
-export type AlumnosCursosWithRelations = AlumnosCursos & AlumnosCursosRelations;
+export type AlumnosCursosWithRelations = AlumnosCursos &
+  AlumnosCursosRelations;

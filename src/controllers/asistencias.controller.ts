@@ -18,7 +18,10 @@ import {
   response,
 } from '@loopback/rest';
 import {Asistencias} from '../models';
-import {AsistenciasRepository} from '../repositories';
+import {
+  AsistenciasRepository,
+  ConteoAsistenciasAlumno,
+} from '../repositories';
 import {inject} from '@loopback/core';
 
 export class AsistenciasController {
@@ -94,6 +97,29 @@ export class AsistenciasController {
     @param.where(Asistencias) where?: Where<Asistencias>,
   ): Promise<Count> {
     return this.asistenciasRepository.updateAll(asistencias, where);
+  }
+
+  @get('/asistencias/conteo-por-alumno')
+  @response(200, {
+    description: 'Total histórico de veces registradas por alumno',
+    content: {
+      'application/json': {
+        schema: {
+          type: 'array',
+          items: {
+            type: 'object',
+            properties: {
+              alumno_fk: {type: 'number'},
+              total: {type: 'number'},
+              presentes: {type: 'number'},
+            },
+          },
+        },
+      },
+    },
+  })
+  async conteoPorAlumno(): Promise<ConteoAsistenciasAlumno[]> {
+    return this.asistenciasRepository.contarPorAlumno();
   }
 
   @get('/asistencias/{id}')

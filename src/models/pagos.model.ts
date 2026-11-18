@@ -1,30 +1,58 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    postgresql: {schema: 'public', table: 'pagos'},
+  },
+})
 export class Pagos extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  id_pagos?: number;
+  id_pago?: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  alumno_fk: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  tipo_pago_fk: number;
 
   @property({
     type: 'string',
+    jsonSchema: {format: 'date'},
     required: true,
   })
-  tipo: string;
+  fecha_pago: string;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  monto: number;
+
+  @property({
+    type: 'number',
+  })
+  descuento?: number;
+
+  @property({
+    type: 'number',
+  })
+  descuento_porcentaje?: number;
 
   @property({
     type: 'string',
-    required: true,
   })
-  frecuenciapago: string;
+  estado?: string;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<Pagos>) {
@@ -32,8 +60,6 @@ export class Pagos extends Entity {
   }
 }
 
-export interface PagosRelations {
-  // describe navigational properties here
-}
+export interface PagosRelations {}
 
 export type PagosWithRelations = Pagos & PagosRelations;

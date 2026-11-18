@@ -1,13 +1,17 @@
 import {Entity, model, property} from '@loopback/repository';
 
-@model({settings: {strict: false}})
+@model({
+  settings: {
+    postgresql: {schema: 'public', table: 'cursos'},
+  },
+})
 export class Cursos extends Entity {
   @property({
     type: 'number',
     id: true,
     generated: true,
   })
-  id_cursos?: number;
+  id_curso?: number;
 
   @property({
     type: 'string',
@@ -16,15 +20,16 @@ export class Cursos extends Entity {
   nombre_curso: string;
 
   @property({
+    type: 'string',
+  })
+  tipo_curso?: string;
+
+  @property({
     type: 'number',
     required: true,
   })
   fk_area_curso: number;
 
-  // Define well-known properties here
-
-  // Indexer property to allow additional data
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [prop: string]: any;
 
   constructor(data?: Partial<Cursos>) {
@@ -32,8 +37,6 @@ export class Cursos extends Entity {
   }
 }
 
-export interface CursosRelations {
-  // describe navigational properties here
-}
+export interface CursosRelations {}
 
 export type CursosWithRelations = Cursos & CursosRelations;

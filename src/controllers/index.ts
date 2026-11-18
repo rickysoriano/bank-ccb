@@ -7,3 +7,6 @@ export * from './materia.controller';
 export * from './cursos.controller';
 export * from './area-curso.controller';
 export * from './asistencias.controller';
+export * from './tipos-pago.controller';
+export * from './maestros.controller';
+export * from './asistencias-maestros.controller';

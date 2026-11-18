@@ -5,70 +5,41 @@ import {Alumnos, AlumnosRelations} from '../models';
 
 export class AlumnosRepository extends DefaultCrudRepository<
   Alumnos,
-  typeof Alumnos.prototype.id_alumnos,
+  typeof Alumnos.prototype.id_alumno,
   AlumnosRelations
 > {
-
   constructor(
     @inject('datasources.db') dataSource: DbDataSource,
   ) {
     super(Alumnos, dataSource);
   }
 
-  getNombreAlumno(id: number){
-
-    let sql : string = `select concat(a.nombre,' ',a.apellido_paterno,' ',a.apellido_materno) as "nombre"
-    from alumnos a
-    where id_alumnos = ${id}`
-
-    return new Promise((resolve, reject)=>{
-      this.dataSource.execute(sql)
-      .then(result => resolve(result))
-      .catch(error => reject(error));
-    })
+  async getNombreAlumno(id: number) {
+    const sql = `
+      select concat_ws(' ', a.nombre, a.apellido_paterno, a.apellido_materno) as nombre
+      from alumnos a
+      where a.id_alumno = $1`;
+    return this.dataSource.execute(sql, [id]);
   }
 
-  getAlumnobyNombreCompleto(nombre:string,
-    apellido_paterno:string,
-    apellido_materno:string,
-    fecha_nacimiento:string,
-    ){
-
-    let sql : string = `select * from alumnos
-    where nombre = '${nombre}'
-    and apellido_paterno= '${apellido_paterno}'
-    and apellido_materno= '${apellido_materno}'
-    and fecha_nacimiento = '${fecha_nacimiento}'`
-
-    return new Promise((resolve, reject)=>{
-      this.dataSource.execute(sql)
-      .then(result => resolve(result))
-      .catch(error => reject(error));
-    })
+  async getAlumnobyNombreCompleto(
+    nombre: string,
+    apellido_paterno: string,
+    apellido_materno: string,
+    fecha_nacimiento: string,
+  ) {
+    const sql = `
+      select *
+      from alumnos
+      where nombre = $1
+        and apellido_paterno = $2
+        and apellido_materno = $3
+        and fecha_nacimiento = $4`;
+    return this.dataSource.execute(sql, [
+      nombre,
+      apellido_paterno,
+      apellido_materno,
+      fecha_nacimiento,
+    ]);
   }
-
-  setPagoAlumno(
-    id: number,
-    tipoPago: number,
-  ){
-
-    let sql : string = `
-    select * from actualizar_fecha_pago(${id},${tipoPago})
-    `
-
-    return new Promise((resolve, reject)=>{
-      this.dataSource.execute(sql)
-      .then(result => resolve(result))
-      .catch(error => reject(error));
-    })
-  }
-
-
-
-
-
-
-
-
-
 }

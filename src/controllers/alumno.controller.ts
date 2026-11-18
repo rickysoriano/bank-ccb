@@ -37,12 +37,12 @@ export class AlumnoController {
         'application/json': {
           schema: getModelSchemaRef(Alumnos, {
             title: 'NewAlumnos',
-            exclude: ['id_alumnos'],
+            exclude: ['id_alumno'],
           }),
         },
       },
     })
-    alumnos: Omit<Alumnos, 'id_alumnos'>,
+    alumnos: Omit<Alumnos, 'id_alumno'>,
   ): Promise<Alumnos> {
     return this.alumnosRepository.create(alumnos);
   }
@@ -191,33 +191,7 @@ export class AlumnoController {
   }
 
   /**
-   * Registrar Pago
+   * Registrar un pago: usa POST /pagos con alumno_fk, tipo_pago_fk,
+   * fecha_pago y monto.
    */
-
-  @get('/alumnos/pago/{id}/{tipoPago}')
-  @response(200, {
-    description: 'Array of Alumnos model instances',
-    content: {
-      'application/json': {
-        schema: {
-          type: 'array',
-          items: getModelSchemaRef(Alumnos, {includeRelations: true}),
-        },
-      },
-    },
-  })
-  async setPago(
-    @param.path.number('id') id: number,
-    @param.path.number('tipoPago') tipoPago: number,
-  ): Promise<any> {
-    return this.alumnosRepository.setPagoAlumno(id,tipoPago);
-  }
-
-
-
-
-
-
-
-
 }
